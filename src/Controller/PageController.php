@@ -15,11 +15,16 @@ class PageController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
-    #[Route('/about', name: 'app_about')]
+    #[Route('/contact', name: 'app_contact')]
     public function about(): Response
     {
-        return $this->render('page/about.html.twig');
+        return $this->render('page/contact.html.twig');
+        
     }
 
 
 }
+
+
+
+
