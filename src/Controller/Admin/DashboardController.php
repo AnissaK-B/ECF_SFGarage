@@ -6,6 +6,7 @@ use App\Entity\Car;
 use App\Entity\Formulaire;
 use App\Entity\Schedule;
 use App\Entity\Service;
+use App\Entity\ServiceEmployee;
 use App\Entity\Testimonials;
 use Doctrine\ORM\Mapping\Entity;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -51,6 +52,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Commentaires', 'fa fa-message', Testimonials::class);   
         yield MenuItem::linkToCrud('Voitures', 'fa fa-car', Car::class);  
         yield MenuItem::linkToCrud('Horaires', 'fa fa-calendar-days', Schedule::class);   
-        yield MenuItem::linkToCrud('Horaires', 'fa fa-calendar-days', Service::class);  
+        yield MenuItem::linkToCrud('Services', 'fa fa-list', Service::class); 
+        yield MenuItem::linkToCrud('ServicesEmployés', 'fa fa-list', ServiceEmployee::class);   
     }
 }

@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?Service $service = null;
 
-    #[ORM\OneToMany(mappedBy: 'user1', targetEntity: Testimonials::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Testimonials::class)]
     private Collection $testimonials;
 
     public function __construct()
@@ -45,6 +45,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->schedules = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
     }
+
+     public function __toString()
+     {
+        return $this->getEmail();
+     }
 
     public function getId(): ?int
     {
