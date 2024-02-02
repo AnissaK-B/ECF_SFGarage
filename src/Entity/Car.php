@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use App\Repository\CarRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: CarRepository::class)]
+#[Vich\Uploadable]
 class Car
 {
     #[ORM\Id]
@@ -17,7 +20,7 @@ class Car
     private ?string $marque = null;
 
     #[ORM\Column]
-    private ?int $milage = null;
+    private ?int $mileage = null;
 
     #[ORM\Column]
     private ?int $year = null;
@@ -27,6 +30,15 @@ class Car
 
     #[ORM\Column]
     private ?int $price = null;
+
+    #[Vich\UploadableField(mapping: 'car', fileNameProperty: 'car')]
+    private ?File $imageFile= null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $imageName = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -38,21 +50,21 @@ class Car
         return $this->marque;
     }
 
-    public function setMarque(string $marque): static
+    public function setMarque(?string $marque): static
     {
         $this->marque = $marque;
 
         return $this;
     }
 
-    public function getMilage(): ?int
+    public function getMileage(): ?int
     {
-        return $this->milage;
+        return $this->mileage;
     }
 
-    public function setMilage(int $milage): static
+    public function setMileage(?int $mileage): static
     {
-        $this->milage = $milage;
+        $this->mileage = $mileage;
 
         return $this;
     }
@@ -62,7 +74,7 @@ class Car
         return $this->year;
     }
 
-    public function setYear(int $year): static
+    public function setYear(?int $year): static
     {
         $this->year = $year;
 
@@ -74,7 +86,7 @@ class Car
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?string $image): static
     {
         $this->image = $image;
 
@@ -86,10 +98,48 @@ class Car
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(?int $price): static
     {
         $this->price = $price;
 
         return $this;
     }
+ /**
+     * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
+     * of 'UploadedFile' is injected into this setter to trigger the update. If this
+     * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
+     * must be able to accept an instance of 'File' as the bundle will inject one here
+     * during Doctrine hydration.
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $imageFile
+     */
+    public function setImageFile(?File $imageFile = null): void
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !== $imageFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
+    }
+
+    
 }
+   
+

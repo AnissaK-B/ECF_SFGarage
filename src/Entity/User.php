@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Schedule::class)]
-    private Collection $schedules;
+    private Collection $schedule;
 
     #[ORM\ManyToOne(inversedBy: 'user')]
     private ?Service $service = null;
@@ -42,14 +42,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         
-        $this->schedules = new ArrayCollection();
+        $this->schedule = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
     }
 
-     public function __toString()
-     {
+    public function __toString()
+    {
         return $this->getEmail();
-     }
+    }
 
     public function getId(): ?int
     {
@@ -130,15 +130,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Schedule>
      */
-    public function getSchedules(): Collection
+    public function getSchedule(): Collection
     {
-        return $this->schedules;
+        return $this->schedule;
     }
 
     public function addSchedule(Schedule $schedule): static
     {
-        if (!$this->schedules->contains($schedule)) {
-            $this->schedules->add($schedule);
+        if (!$this->schedule->contains($schedule)) {
+            $this->schedule->add($schedule);
             $schedule->setUser($this);
         }
 
@@ -147,7 +147,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeSchedule(Schedule $schedule): static
     {
-        if ($this->schedules->removeElement($schedule)) {
+        if ($this->schedule->removeElement($schedule)) {
             // set the owning side to null (unless already changed)
             if ($schedule->getUser() === $this) {
                 $schedule->setUser(null);

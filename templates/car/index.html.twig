@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Garage V.Parrot{% endblock %}
+ 
+
+{% block body %}
+
+ <h1 class="text-center" > {{"Nos voitures d'occasion"}}</h1>
+ 
+ <h3 > {{"Filtrer les annonces"}}</h3>
+      <div class="row">
+        {% for car in cars %}
+            
+        {% include "partials/_block_car.html.twig" %}
+
+        {% endfor %}
+    </div>
+
+
+{% endblock %}
+ 
+ 
+ 
+
+
+
+

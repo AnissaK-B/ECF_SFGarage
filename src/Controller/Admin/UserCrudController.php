@@ -2,17 +2,19 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Schedule;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
-class ScheduleCrudController extends AbstractCrudController
+class UserCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
-        return Schedule::class;
+        return User::class;
     }
 
  
@@ -20,10 +22,12 @@ class ScheduleCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('morning_hours'),
-            TextField::new('evening_hours'),
-            TextField::new('day_of_week'),
+            EmailField::new('Email') ->setRequired(true),
+            TextField::new('password') ->setLabel('Mot de passe')
+            ->setFormType(PasswordType::class)
+            ->hideOnIndex(),
+              // TextField::new('roles')
         ];
     }
-  
+       
 }

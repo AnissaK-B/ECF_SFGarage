@@ -18,12 +18,12 @@ class Schedule
     private ?string $dayOfWeek = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $openingTime = null;
+    private ?string $morningHours = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $closingTime = null;
+    private ?string $eveningHours = null;
 
-    #[ORM\ManyToOne(inversedBy: 'schedules')]
+    #[ORM\ManyToOne(inversedBy: 'schedule')]
     private ?User $user = null;
 
     public function getId(): ?int
@@ -43,26 +43,26 @@ class Schedule
         return $this;
     }
 
-    public function getOpeningTime(): ?string
+    public function getMorningHours(): ?string
     {
-        return $this->openingTime;
+        return $this->morningHours;
     }
 
-    public function setOpeningTime(string $openingTime): static
+    public function setMorningHours(string $morningHours): static
     {
-        $this->openingTime = $openingTime;
-
+        $this->morningHours= $morningHours;
+    
         return $this;
     }
 
-    public function getClosingTime(): ?string
+    public function getEveningHours(): ?string
     {
-        return $this->closingTime;
+        return $this->eveningHours;
     }
 
-    public function setClosingTime(string $closingTime): static
+    public function setEveningHours(string $eveningHours): static
     {
-        $this->closingTime = $closingTime;
+        $this->eveningHours = $eveningHours;
 
         return $this;
     }

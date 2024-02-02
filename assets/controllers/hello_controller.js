@@ -14,3 +14,6 @@ export default class extends Controller {
         this.element.textContent = 'Hello Stimulus! Edit me in assets/controllers/hello_controller.js';
     }
 }
+import { Collapse, Ripple, initMDB } from "mdb-ui-kit";
+
+initMDB({ Collapse, Ripple });

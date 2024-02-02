@@ -21,7 +21,7 @@ class Formulaire
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $surname = null;
+    private ?string $lastname = null;
 
     #[ORM\Column]
     private ?string $tel = null;
@@ -58,14 +58,14 @@ class Formulaire
         return $this;
     }
 
-    public function getSurname(): ?string
+    public function getLastname(): ?string
     {
-        return $this->surname;
+        return $this->lastname;
     }
 
-    public function setSurname(string $surname): static
+    public function setLastname(string $lastname): static
     {
-        $this->surname = $surname;
+        $this->lastname = $lastname;
 
         return $this;
     }

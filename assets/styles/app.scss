@@ -4,4 +4,37 @@ $secondary: #6a994e;
 $success: #6a994e;
 
 @import "~bootstrap/scss/bootstrap";
+/*sticky header position*/
+.navbar-light .navbar-nav .nav-link{
+    color: black;
+    font-size: 22px;
+}
+.navbar-light .navbar-brand{
+    color: black;
+    font-size: 30px;
+}
+header{
+    height: 100vh;
+    min-height: 400px;
+    background-size: cover;
+    background-image: url("https://motofilm.pl/wp-content/uploads/2012/02/jaguar-c-x16-production-concept-22.jpg");
+}
+/*media Query*/
+@media only screen and (max-width:600px){
+    header{
+        background-position: 20% 33%;
+    }
+}
 
+.roboto-thin {
+    font-family: "Roboto", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+
+  .roboto-black {
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+   

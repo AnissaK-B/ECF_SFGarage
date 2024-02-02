@@ -1,0 +1,23 @@
+ #config/packages/easy_admin.yaml
+
+easy_admin:
+  entities:
+    Avis:
+      class: App\Entity\Testimonials
+      label: "Testimonial"
+      list:
+        fields:
+          - "id"
+          - "name"
+          - "comment"
+          - "rate"
+          - { property: "is_active", type: "toggle" } # Configuration pour le bouton bascule
+        actions:
+          - "edit"
+          - "delete"
+      edit:
+        fields:
+          - "name"
+          - "comment"
+          - "rate"
+          - { property: "is_active", type: "toggle" } # Configuration pour le bouton bascule
