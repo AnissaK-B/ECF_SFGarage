@@ -97,3 +97,56 @@ class CarController extends AbstractController
         return new JsonResponse($filteredData);
     }
 }
+
+
+
+
+
+
+{% block title %}Garage V.Parrot{% endblock %}
+{% block body %}
+        <img src="{{asset('assets/images/images (1).jpeg')}}" alt="photo de voiture" class="img-top-pc">
+        <main class="main">
+                <h2>{{ services[0].getName() }}</h2>
+                <span class="trait"></span>
+                <div class="texte">
+                        <p>{{serviceEmployee[1].getDescription}}</p>
+                        <img src="{{asset('assets/images/images (2).jpeg')}}" alt="photo voiture">
+                </div>
+        <section class="bg-blk">
+                <h2>nos prestations</h2>
+                <div class="container">
+                        <div class="card">
+                                <a href="{{path('app_cars')}}">
+                                <img src="{{asset('assets/images/images (2).jpeg')}}" alt="photo de voiture">
+                                </a>
+                        <div class="card-body">
+                                <h3 class="card-title">véhicules d'occasions</h3>
+                        </div>
+                </div>
+               
+
+        </div>
+        </section>
+        <section class="bg-blc">
+                <div class="avis">
+                <a href="{{path('app_avis')}}" class="btn btn2 key">Cliquez ici pour donner votre avis</a>
+                <p>Prenez le temps de nous donner une apreciation !</p>
+                </div>
+        </section>
+        {% for testimonial in intestimonials %}
+        {% if testimonial.isActive() %}
+        <div class="border rounded w-50 mt-5" style="margin-left: 50%; transform: translateX(-50%)">
+                <h5 class="border-bottom p-2">{{testimonial.getName()}}</h5> 
+                <p style="padding-left: 3%; padding-top: 2%;">{{testimonial.getTestimonials()}}</p>
+                <p class="ps-4 mt-4 text-decoration-underline">{{testimonial.getRate()}}/10</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+</main>
+{% endblock %}
+
+
+
+<section id="section6" class="py-3">
+        <div class="row mb-3">

@@ -4,6 +4,9 @@ controllers:
         namespace: App\Controller
     type: attribute
 
+
+
+
     
 # config/routes.yaml
 

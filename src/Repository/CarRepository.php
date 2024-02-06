@@ -24,7 +24,8 @@ class CarRepository extends ServiceEntityRepository
 
     public function findByFilters($marque = null, $mileage = null, $year = null, $price = null)
     {
-        $qb = $this->createQueryBuilder('a');
+        $qb = $this->createQueryBuilder('a')
+        ->where('a.IsValidated = 1');
 
         if (!empty($mileage)) {
             $qb->andWhere('a.mileage <= :mileage')

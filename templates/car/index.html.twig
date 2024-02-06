@@ -1,20 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Garage V.Parrot{% endblock %}
+{% block title %}Liste des voitures d'occasion{% endblock %}
  
 
 {% block body %}
 
  <h1 class="text-center" > {{"Nos voitures d'occasion"}}</h1>
+
+ 
  
  <h3 > {{"Filtrer les annonces"}}</h3>
-      <div class="row">
+<div class="filter-container">
+ <!-- Form for AJAX filtering -->
+    <form id="filterForm"
+
+     <label for="minYear">Année min</label>
+    <input type="range" name="minYear" id="minYear">
+    <label for="maxYear">Année max</label>
+        <input type="range" name="maxYear" id="maxYear">
+
+
+     <label for="minPrice">Prix min</label>
+        <input type="range" name="minPrice" id="minPrice">
+
+        <label for="maxPrice">Prix max</label>
+        <input type="range" name="maxPrice" id="maxPrice">
+
+
+    <label for="minKm">Kilomètres max</label>
+        <input type="range" name="minKm" id="minKm">
+
+        <label for="maxKm">Kilomètres min</label>
+        <input type="range" name="maxKm" id="maxKm">
+        <button type="button" onclick="filterCars()">Appliquez vos choix</button>
+    </form>  
+
+  </div>
+
+   <!-- Display filtered cars here -->
+    <div id="filterCars"></div>
+
+   <div class="row">
         {% for car in cars %}
             
         {% include "partials/_block_car.html.twig" %}
 
         {% endfor %}
-    </div>
+   </div>
 
 
 {% endblock %}

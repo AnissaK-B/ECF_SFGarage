@@ -1,0 +1,99 @@
+  {% extends 'base.html.twig' %}
+
+{% block title %}Votre choix{% endblock %}
+ 
+
+{% block body %}
+<div class="container">
+<h1> {{car.marque}}</h1>
+   <div class="row">
+      <div class="col">
+         <div class="card" style="width: 35rem;">
+            <img src="{{ asset('/uploads/image/' ~ car.getImage()) }}" alt="photo de voiture">
+        </div>
+       </div>
+
+      <div class="col">
+        <div class="card" style="width: 18rem;">
+           
+           <div class="card-body">
+              <h5 class="card-title">{{car.marque}}</h5>
+                <p>Kilométrage : {{ car.getMileage() | number_format }} km</p>
+                <p>Année: {{ car.getYear() }} </p>
+                 <div>
+                 <p><strong>Garantie 6 mois</strong></p>
+                </div>
+                 <p>Prix : {{ car.getPrice() / 100 }} €</p>
+            </div>
+      </div>
+ </div>
+      <div class="col">
+        <div class="card" style="width: 18rem;">
+         
+            <div class="card-body">
+                    <h5 class="card-title">Nos Garanties</h5>
+                    <p ><i class="fas fa-check"></i>Véhicule controlé</p>
+                    <p ><i class="fas fa-check"></i>Satisfait ou remboursé </p>
+                    <p ><i class="fas fa-check"></i>Offre de reprise.</p>
+                    <p ><i class="fas fa-check"></i>Offre de financement</p>
+                    <p ><i class="fas fa-check"></i>Assistance dépannage 7j/7</p>
+        </div>
+       </div> 
+   </div>
+</div>
+
+</div>
+
+    <div class="container mt-4">
+    <a class="btn btn-primary" href="#contact">Contactez-nous</a>
+     </div>
+        <div class="row mb-4">
+            <div class="col-md-6 offset-md-3 text-center">
+                <p>Vous avez des questions ? N'hésitez pas à nous contacter directement. Notre
+                    équipe vous joindra
+                    dans les heures qui suivent </p>
+            </div>
+        </div>
+         <div class="container">
+      <div class="row">
+      
+        <form action="javascript:;">
+           <div class="mb-3">
+            <label for="name" class="form-label">Nom</label>
+            <input type="name" class="form-control" id="name" placeholder="Marie">
+          </div>
+
+           <div class="mb-3">
+            <label for="surname" class="form-label">Prénom</label>
+            <input type="name" class="form-control" id="surname" placeholder="Dupond">
+          </div>
+          <div class="mb-3">
+            <label for="courriel" class="form-label">Email</label>
+            <input type="email" class="form-control" id="courriel" placeholder="name@example.com">
+          </div>
+
+          <div class="mb-3">
+        <label for="tel" class="form-label">Numéro de téléphone</label>
+        <input type="tel" class="form-control" id="tel" placeholder="01 20 45 06 45">
+    </div>
+
+
+          <div class="mb-3">
+            <label for="bloc_texte" class="form-label">Message</label>
+            <textarea class="form-control" id="bloc_texte" rows="3"></textarea>
+          </div>
+        
+        <button type="submit" class="btn btn-primary">Envoyer</button>
+   </div>
+
+          
+        </form>
+      </div>
+    </div>
+
+
+</div>
+</div>
+
+      
+{% endblock %}
