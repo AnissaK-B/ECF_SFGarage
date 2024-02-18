@@ -2,34 +2,32 @@
 
 namespace App\Controller;
 
+use App\Form\TestimonialsType;
+use App\Repository\CarRepository;
+use App\Repository\ScheduleRepository;
+use App\Repository\TestimonialsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PageController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(CarRepository $carRepository, ParameterBagInterface $parameterBagInterface, ScheduleRepository $scheduleRepository, TestimonialsRepository $testimonialsRepository): Response
     {
+        $limit = $parameterBagInterface->get('home_car_limit');
+        $cars = $carRepository->findBy([], ['id' => 'DESC'], $limit);
+        $testimonials = $testimonialsRepository->findAll();
+        $schedule = $scheduleRepository->findAll();
+
         return $this->render('page/index.html.twig', [
-            'controller_name' => 'HomeController',
+          
+            'cars' => $cars,
+            'testimonials' => $testimonials,
+            'schedule' => $schedule,
         ]);
     }
-    #[Route('/contact', name: 'app_contact')]
-    public function about(): Response
-    {
-        return $this->render('page/contact.html.twig');
-        
-    }
-
-
-
-
-
-    
-
 }
-
-
-
-

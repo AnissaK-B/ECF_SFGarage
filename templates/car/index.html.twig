@@ -5,55 +5,45 @@
 
 {% block body %}
 
- <h1 class="text-center" > {{"Nos voitures d'occasion"}}</h1>
+<div class="container mt-4">
+    <h1 class="text-center mb-4">{{"Nos voitures d'occasion"}}</h1>
 
- 
- 
- <h3 > {{"Filtrer les annonces"}}</h3>
-<div class="filter-container">
- <!-- Form for AJAX filtering -->
-    <form id="filterForm"
+    <h3 class="mb-3">{{"Filtrer les annonces"}}</h3>
+    <div class="filter-container">
+        <!-- Form for AJAX filtering -->
+        <form id="filterForm">
+            <div class="mb-3">
+                <label for="year">Année</label>
+                <input type="range" name="year" id="year">
+            </div>
 
-     <label for="minYear">Année min</label>
-    <input type="range" name="minYear" id="minYear">
-    <label for="maxYear">Année max</label>
-        <input type="range" name="maxYear" id="maxYear">
+            <div class="mb-3">
+                <label for="price">Prix</label>
+                <input type="range" name="price" id="price">
+            </div>
 
+            <div class="mb-3">
+                <label for="mileage">Kilomètres</label>
+                <input type="range" name="mileage" id="mileage">
+            </div>
 
-     <label for="minPrice">Prix min</label>
-        <input type="range" name="minPrice" id="minPrice">
+            <button type="button" onclick="filterCars()" class="btn btn-secondary">Appliquez vos choix</button>
+        </form>
+    </div>
 
-        <label for="maxPrice">Prix max</label>
-        <input type="range" name="maxPrice" id="maxPrice">
+    <!-- Display filtered cars here -->
+    <div id="filterCars" class="mb-4"></div>
 
-
-    <label for="minKm">Kilomètres max</label>
-        <input type="range" name="minKm" id="minKm">
-
-        <label for="maxKm">Kilomètres min</label>
-        <input type="range" name="maxKm" id="maxKm">
-        <button type="button" onclick="filterCars()">Appliquez vos choix</button>
-    </form>  
-
-  </div>
-
-   <!-- Display filtered cars here -->
-    <div id="filterCars"></div>
-
-   <div class="row">
+    <div class="row">
         {% for car in cars %}
-            
-        {% include "partials/_block_car.html.twig" %}
-
+            {% include "partials/_block_car.html.twig" %}
         {% endfor %}
-   </div>
+    </div>
+</div>
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/car_filter.js') }}"></script>
+{% endblock %}
 
 {% endblock %}
- 
- 
- 
-
-
-
-

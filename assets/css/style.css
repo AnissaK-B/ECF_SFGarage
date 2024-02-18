@@ -1,0 +1,21 @@
+.filterForm{
+    margin-bottom: 20px;
+
+}
+.filterCars{
+ 
+    border: 1px solid success #6a994e;
+  
+
+}
+
+#mileage,
+#marque,
+#year,
+#price {
+  border: 1px solid success #6a994e;
+}
+
+h5{
+    font-size: 1.5rem;
+}

@@ -10,6 +10,7 @@ controllers:
     
 # config/routes.yaml
 
-car_filter:
-    path: '/car/filter'
-    controller: 'App\Controller\CarController::filter'
+app_car_filter:
+    path: /car/filter
+    controller: App\Controller\CarController::filter
+    methods: [POST]

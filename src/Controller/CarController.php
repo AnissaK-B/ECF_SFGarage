@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Controller;
-use App\Entity\car;
+
+use App\Entity\Car;
 use App\Repository\CarRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,65 +12,58 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CarController extends AbstractController
 {
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
+
     #[Route('/car', name: 'app_car')]
     public function index(CarRepository $carRepository): Response
     {
-        $cars = $carRepository->findBy([], ['id'=>'DESC' ]);
+        $cars = $carRepository->findBy([], ['id' => 'DESC']);
         return $this->render('car/index.html.twig', [
-          
-            'cars'=> $cars,
+            'cars' => $cars,
         ]);
     }
 
     #[Route('/car/{id}', name: 'app_car_show')]
     public function show(Car $car): Response
     {
-     
         return $this->render('car/show.html.twig', [
-          
-            'car'=> $car,
+            'car' => $car,
         ]);
     }
-    
-    
-   public function filter(Request $request):JsonResponse
-   {
-       // Récupérer les paramètres de la requête AJAX
-       $minYear = $request->request->get('minYear');
-       $maxYear = $request->request->get('maxYear');
-       $minPrice = $request->request->get('minPrice');
-       $maxPrice = $request->request->get('maxPrice');
-       $minKm = $request->request->get('minKm');
-       $maxKm = $request->request->get('maxKm');
 
-       // Construire la requête en fonction des filtres
-       $query = $this->getDoctrine()
-           ->getRepository(Car::class)
-           ->createQueryBuilder('car')
-           ->where('car.year BETWEEN :minYear AND :maxYear')
-           ->andWhere('car.price BETWEEN :minPrice AND :maxPrice')
-           ->andWhere('car.kilometers BETWEEN :minKm AND :maxKm')
-           ->setParameter('minYear', $minYear)
-           ->setParameter('maxYear', $maxYear)
-           ->setParameter('minPrice', $minPrice)
-           ->setParameter('maxPrice', $maxPrice)
-           ->setParameter('minKm', $minKm)
-           ->setParameter('maxKm', $maxKm)
-           ->getQuery();
+    #[Route('/car/filter', name: 'app_car_filter', methods: ['POST'])]
+    public function filter(Request $request, CarRepository $carRepository): JsonResponse
+    {
+        try {
+            // Récupérer les paramètres de la requête AJAX
+            $year = $request->request->get('year');
+            $price = $request->request->get('price');
+            $mileage = $request->request->get('mileage');
 
-       $cars = $query->getResult();
+            // Utiliser l'EntityManager pour créer la requête
+            $queryBuilder = $this->entityManager->createQueryBuilder();
+            $queryBuilder
+                ->select('car')
+                ->from(Car::class, 'car')
+                ->where('car.year = :year')
+                ->andWhere('car.price = :price')
+                ->andWhere('car.mileage = :mileage')
+                ->setParameter('year', $year)
+                ->setParameter('price', $price)
+                ->setParameter('mileage', $mileage);
 
-       // Retourner les résultats au format JSON
-       return new JsonResponse(['cars' => $cars]);
-   }
+            $query = $queryBuilder->getQuery();
 
-   
-
+            // Exécutez la requête et renvoyez les résultats au format JSON
+            $filteredCars = $query->getResult();
+            return new JsonResponse(['cars' => $filteredCars]);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Une erreur s\'est produite lors du filtrage des voitures.']);
+        }
+    }
 }
-
-
-
-
-
-
-

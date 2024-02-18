@@ -1,15 +1,16 @@
 
 $primary: #386641;
 $secondary: #6a994e;
-$success: #6a994e;
+$success: #0c0c0b;
+
 
 @import "~bootstrap/scss/bootstrap";
 /*sticky header position*/
-.navbar-light .navbar-nav .nav-link{
+.navbar-light .navbar-nav .nav-link .btn{
     color: black;
     font-size: 22px;
 }
-.navbar-light .navbar-brand{
+ .navbar-brand{
     color: black;
     font-size: 30px;
 }
@@ -26,11 +27,6 @@ header{
     }
 }
 
-a{
-    text-decoration:none;
-}
-
-
 
 .roboto-thin {
     font-family: "Roboto", sans-serif;
@@ -43,3 +39,13 @@ a{
     font-weight: 900;
     font-style: normal;
   }
+
+//Footer
+a {
+    text-decoration: none;
+}
+
+/* Désactiver le style de liste par défaut pour les listes non ordonnées */
+ul, li {
+    list-style: none;
+}

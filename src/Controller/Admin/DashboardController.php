@@ -5,8 +5,8 @@ namespace App\Controller\Admin;
 use App\Entity\Car;
 use App\Entity\Formulaire;
 use App\Entity\Schedule;
+
 use App\Entity\Service;
-use App\Entity\ServiceEmployee;
 use App\Entity\Testimonials;
 use App\Entity\User;
 use Doctrine\ORM\Mapping\Entity;
@@ -53,13 +53,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Voitures', 'fa fa-car', Car::class);  
         yield MenuItem::linkToCrud('Commentaires', 'fa fa-message', Testimonials::class);   
-        yield MenuItem::linkToCrud('Messages', 'fa-brands fa-wpforms', Formulaire::class);  
+        yield MenuItem::linkToCrud('Contact', 'fa-brands fa-wpforms', Formulaire::class);
+         
         
         if($this->isGranted('ROLE_ADMIN')){
             yield MenuItem::linkToCrud('Horaires', 'fa fa-calendar-days', Schedule::class);   
-            yield MenuItem::linkToCrud('Titres', 'fa fa-newspaper', Service::class); 
-            yield MenuItem::linkToCrud('Description', 'fa fa-newspaper', ServiceEmployee::class);   
             yield MenuItem::linkToCrud('Utilisateurs', 'fa fa-users', User::class); 
+            yield MenuItem::linkToCrud('Service', 'fa fa-list', Service::class); 
         }
 }
 }

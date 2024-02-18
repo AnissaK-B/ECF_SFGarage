@@ -33,17 +33,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Schedule::class)]
     private Collection $schedule;
 
-    #[ORM\ManyToOne(inversedBy: 'user')]
-    private ?Service $service = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Testimonials::class)]
     private Collection $testimonials;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Service::class)]
+    private Collection $services;
 
     public function __construct()
     {
         
         $this->schedule = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function __toString()
@@ -157,17 +159,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getService(): ?Service
-    {
-        return $this->service;
-    }
-
-    public function setService(?Service $service): static
-    {
-        $this->service = $service;
-
-        return $this;
-    }
+    
 
     /**
      * @return Collection<int, Testimonials>
@@ -177,7 +169,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->testimonials;
     }
 
-    public function addTetimonials(Testimonials $testimonials): static
+    public function addTestimonial(Testimonials $testimonials): static
     {
         if (!$this->testimonials->contains($testimonials)) {
             $this->testimonials->add($testimonials);
@@ -187,12 +179,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeTestimonials(Testimonials $testimonials): static
+    public function removeTestimonial(Testimonials $testimonials): static
     {
         if ($this->testimonials->removeElement($testimonials)) {
             // set the owning side to null (unless already changed)
             if ($testimonials->getUser() === $this) {
                 $testimonials->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Service>
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): static
+    {
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+            $service->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): static
+    {
+        if ($this->services->removeElement($service)) {
+            // set the owning side to null (unless already changed)
+            if ($service->getUser() === $this) {
+                $service->setUser(null);
             }
         }
 
