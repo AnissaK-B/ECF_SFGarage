@@ -16,18 +16,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(CarRepository $carRepository, ParameterBagInterface $parameterBagInterface, ScheduleRepository $scheduleRepository, TestimonialsRepository $testimonialsRepository): Response
+    public function index(CarRepository $carRepository, ParameterBagInterface $parameterBagInterface, TestimonialsRepository $testimonialsRepository): Response
     {
         $limit = $parameterBagInterface->get('home_car_limit');
         $cars = $carRepository->findBy([], ['id' => 'DESC'], $limit);
         $testimonials = $testimonialsRepository->findAll();
-        $schedule = $scheduleRepository->findAll();
+    
 
         return $this->render('page/index.html.twig', [
           
             'cars' => $cars,
             'testimonials' => $testimonials,
-            'schedule' => $schedule,
+           
         ]);
     }
 }

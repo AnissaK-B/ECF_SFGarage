@@ -19,7 +19,7 @@ filterForm.addEventListener("submit", async (e)=> {
             const filterData = await response.json();
             filterCarsDiv.innerHTML = '';
 
-            if (filterData.cars.length === 0) { // Correction du nom de la variable "filterdData" à "filterData"
+            if (filterData.cars.length === 0) { 
                 const h = document.createElement("h4");
                 h.textContent = "Aucun résultat";
                 filterCarsDiv.appendChild(h);
@@ -28,12 +28,12 @@ filterForm.addEventListener("submit", async (e)=> {
                     // Créer et ajouter des éléments HTML pour afficher les voitures filtrées
                     let carDiv = document.createElement('div');
                     carDiv.innerHTML = `
-                        <img src="${car.image}" alt="photo de voiture"> <!-- Correction de la variable "image" -->
+                        <img src="${car.image}" alt="photo de voiture"> 
                         <h3>${car.marque}</h3>
-                        <p>Mileage: ${car.mileage} km</p>
-                        <p>Year: ${car.year}</p>
-                        <p>Price: ${car.price / 100} €</p>
-                        <a href="${car.url}" class="btn btn-card">Je veux ce véhicule</a>
+                        <p>mileage: ${car.mileage} km</p>
+                        <p>year: ${car.year}</p>
+                        <p>price: ${car.price / 100} €</p>
+                        <a href="${car.url}" class="btn btn-card">Je sui interressé par ce véhicule</a>
                     `;
                     filterCarsDiv.appendChild(carDiv);
                 });
