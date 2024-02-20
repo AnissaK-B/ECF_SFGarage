@@ -33,7 +33,7 @@
      symfony cli
      https://symfony.com/download
     Installation des dependances :composer install
-    lancement du server commande :symfony serve 
+    lancement du server commande :symfony serve ou symfony server:start
     ouverture du navigateur sur localhost8000
 
 
