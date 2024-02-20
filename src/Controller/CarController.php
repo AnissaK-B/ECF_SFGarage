@@ -40,12 +40,12 @@ class CarController extends AbstractController
     public function filter(Request $request, CarRepository $carRepository): JsonResponse
     {
         try {
-            // Récupérer les paramètres de la requête AJAX
+           
             $year = $request->request->get('year');
             $price = $request->request->get('price');
             $mileage = $request->request->get('mileage');
 
-            // Utiliser l'EntityManager pour créer la requête
+          
             $queryBuilder = $this->entityManager->createQueryBuilder();
             $queryBuilder
                 ->select('car')
@@ -59,7 +59,7 @@ class CarController extends AbstractController
 
             $query = $queryBuilder->getQuery();
 
-            // Exécutez la requête et renvoyez les résultats au format JSON
+            
             $filteredCars = $query->getResult();
             return new JsonResponse(['cars' => $filteredCars]);
         } catch (\Exception $e) {
