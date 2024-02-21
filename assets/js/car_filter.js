@@ -13,7 +13,7 @@ filterForm.addEventListener("submit", async (event)=> {
     const price = document.getElementById('price').value;
 
     try {
-        const url = `get_cars?marque=${marque}&mileage=${mileage}&year=${year}&price=${price}`;
+        const url = `get_car?marque=${marque}&mileage=${mileage}&year=${year}&price=${price}`;
         const response = await fetch(url);
 
         if (response.ok) {
@@ -40,7 +40,7 @@ filterForm.addEventListener("submit", async (event)=> {
                 });
             }
         } else {
-            console.error("Erreur lors de la requête Ajax");
+            console.error("Erreur lors de la requête Ajax",response.status);
         }
     } catch (error) {
         console.error("Une erreur s'est produite :", error);

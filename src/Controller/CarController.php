@@ -62,7 +62,7 @@ class CarController extends AbstractController
             
             $filteredCars = $query->getResult();
             return new JsonResponse(['cars' => $filteredCars]);
-        } catch (\Exception $e) {
+        } catch (\Exception $event) {
             return new JsonResponse(['error' => 'Une erreur s\'est produite lors du filtrage des voitures.']);
         }
     }
