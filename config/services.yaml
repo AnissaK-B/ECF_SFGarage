@@ -6,15 +6,12 @@
 parameters:
     home_car_limit: 2
 
+
 services:
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-   
-     
-
-
 
 
 
@@ -25,7 +22,7 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
-            - '../src/Kernel.php'
+            - '../src/Kernel.php' 
 
 
 
