@@ -1,6 +1,7 @@
 # ECF_SFGarage
      lien github :https://github.com/AnissaK-B
      lien trello : https://trello.com/b/1wVWf62s/garage-parrot
+     
 
 # Environnement technique
     server web Wampserver
@@ -23,18 +24,23 @@
 
     on cree la base de donnée: php bin/ console doctrine:database:create:garage_parrot
    
-
-
-
-
-
 #  Installation
-     composer :https://getcomposer.org/download
-
-     symfony cli
+  *clonez le repository
+  git clone https://github.com/AnissaK-B/ECF_SFGarage.git
+  
+  *accedez au dossier projet
+   cd projet_garage 
+   
+  *installez les dépendances avec composer
+  composer install
+  ou le télécharger avant: getcomposer.org.
+  
+   *installez symfony cli
      https://symfony.com/download
+  lancez le server avec l'une des commandes : symfony serve ou symfony server:start 
 
-    lancement du server commande  / symfony serve  /  sur le terminal
 
 
+    
+   
  
