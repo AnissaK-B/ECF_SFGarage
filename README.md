@@ -25,15 +25,10 @@
    
 
 
-
-
-
 #  Installation
      composer :https://getcomposer.org/download
-
      symfony cli
      https://symfony.com/download
-
     lancement du server commande  / symfony serve  /  sur le terminal
 
 
