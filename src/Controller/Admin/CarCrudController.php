@@ -12,7 +12,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class CarCrudController extends AbstractCrudController
 {
@@ -35,22 +37,20 @@ class CarCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
+       $mappingsParams= $this->getParameter('vich_uploader.mappings');
+       $carImagePath =  $mappingsParams['car']['uri_prefix'];
         return [
             IdField::new('id')->hideOnForm(),
             TextField::new('marque'),
             IntegerField::new('mileage'),
             NumberField::new('year', 'Année')->setNumberFormat('%d'),
             MoneyField::new('price', 'Prix')->setCurrency('EUR'),
-            ImageField::new('image')
-                ->setBasePath('uploads/image')
-                ->setUploadDir('public/uploads/image'),
+            TextareaField::new('imageFile')->setFormType(VichImageType::class)->hideOnIndex(),
+            ImageField::new('imageName')
+                ->setBasePath($carImagePath)
+                ->hideOnForm()
+                ->setUploadDir('public/images/car')
+                ->setUploadedFileNamePattern('[randomhash].[extension]')
         ];
-    }
-
-    public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->setPageTitle('index', 'Voitures d\'occasion')
-            ->setPaginatorPageSize(15);
     }
 }

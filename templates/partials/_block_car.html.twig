@@ -1,12 +1,15 @@
 
+
 <div class="col-md-4 my-2 d-flex"> 
-   <div class="card" style="width: 18rem;">
-       <img src="{{ asset('/uploads/image/' ~ car.getImage()) }}" alt="photo de voiture">
+   <div class="card card-occasion" style="width: 18rem;">
+      <img src="{{ asset('/images/car/' ~ car.imageName) }}" alt="voiture">
         <div class="card-body">
-               <h5 class="card-title">{{car.marque}}</h5>
-                <p>Prix : {{ car.getPrice() / 100 }} €</p>
+               <h5 class="card-title">{{car.getMarque}}</h5>
                 <p>Kilométrage : {{ car.getMileage() | number_format }} km</p>
                 <p>Année: {{ car.getYear() }} </p>
+                <p>Prix : {{ car.getPrice() / 100 }} €</p>
+               
+              
 
         <a href="{{path('app_car_show',{'id':car.id})}}" class="btn btn-primary">Voir la fiche</a>
   </div>

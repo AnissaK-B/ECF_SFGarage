@@ -50,11 +50,11 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home', Dashboard::class);
         yield MenuItem::linkToCrud('Voitures', 'fa fa-car', Car::class);  
         yield MenuItem::linkToCrud('Commentaires', 'fa fa-message', Testimonials::class);   
         yield MenuItem::linkToCrud('Contact', 'fa-brands fa-wpforms', Formulaire::class);
-         
+
         
         if($this->isGranted('ROLE_ADMIN')){
             yield MenuItem::linkToCrud('Horaires', 'fa fa-calendar-days', Schedule::class);   

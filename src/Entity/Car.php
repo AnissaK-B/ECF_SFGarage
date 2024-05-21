@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-
 #[ORM\Entity(repositoryClass: CarRepository::class)]
 #[Vich\Uploadable]
 class Car
@@ -29,17 +28,20 @@ class Car
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column]
-    private ?int $price = null;
-
-    #[Vich\UploadableField(mapping: 'car', fileNameProperty: 'car')]
-    private ?File $imageFile= null;
+    #[Vich\UploadableField(mapping: 'car', fileNameProperty: 'imageName',size:'imageSize')]
+    private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]
+    private ?int $imageSize = null;
+    
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\Column]
+    private ?int $price = null;
 
     public function getId(): ?int
     {
@@ -105,7 +107,8 @@ class Car
 
         return $this;
     }
- /**
+
+    /**
      * If manually uploading a file (i.e. not using Symfony Form) ensure an instance
      * of 'UploadedFile' is injected into this setter to trigger the update. If this
      * bundle's configuration parameter 'inject_on_load' is set to 'true' this setter
@@ -140,5 +143,17 @@ class Car
         return $this->imageName;
     }
 
-    
-} 
+     /**
+      * Get the value of imageSize
+      *
+      * @return ?int
+      */
+    public function setImageSize(?int $imageSize): void{
+        $this->imageSize = $imageSize;
+    }
+
+     public function getImageSize(): ?int
+     {
+          return $this->imageSize;
+     }
+}

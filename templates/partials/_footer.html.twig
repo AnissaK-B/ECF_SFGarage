@@ -45,12 +45,10 @@
             Horaires d'ouverture et fermeture
           </h6>
           
-          <p class="mr-6">Lundi : 8:30 - 12:30 14:00 - 19:00</p>
-          <p class="mr-6">Mardi : 8:30 - 12:30 / 14:00 - 19:00</p>
-          <p class="mr-6">Mercredi : 8:00 - 12:30 / 14:00 - 19:30</p>
-          <p class="mr-6">Jeudi : 8:00 - 12:30 / 14:00 - 19:00</p>
-          <p class="mr-6">Vendredi : 8:00 - 12:30 / 14:00 - 19:00</p>
-          <p class="mr-6">Samedi : 8:00 - 13:00 </p>
+        {% for schedule in schedules %}
+            <p class="mr-6">{{ schedule.dayOfWeek }} : {{ schedule.morningHours }} - {{ schedule.eveningHours }}</p>
+        {% endfor %}
+
           <p class="mr-6">Dimanche  : Fermé</p>
         </div>
         <!-- Grid column -->

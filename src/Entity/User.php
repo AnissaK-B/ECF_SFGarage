@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -8,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\PasswordStrength;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -23,29 +24,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private array $roles = [];
 
-    /**
-     * @var string The hashed password
-     */
     #[ORM\Column]
+    #[Assert\PasswordStrength([
+        'minScore' => PasswordStrength::STRENGTH_WEAK,
+        'message' => 'Votre mot de passe est trop faible, il doit contenir des lettres, des chiffres et des caractères spéciaux'
+    ])]
     private ?string $password = null;
-
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Schedule::class)]
     private Collection $schedule;
-
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Testimonials::class)]
     private Collection $testimonials;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Service::class)]
-    private Collection $services;
+    private Collection $service;
 
     public function __construct()
     {
-        
         $this->schedule = new ArrayCollection();
         $this->testimonials = new ArrayCollection();
-        $this->services = new ArrayCollection();
+        $this->service = new ArrayCollection();
     }
 
     public function __toString()
@@ -66,42 +65,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): static
     {
         $this->email = $email;
-
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function getRoles(): array
     {
         $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
     public function setRoles(array $roles): static
     {
         $this->roles = $roles;
-
         return $this;
     }
 
-    /**
-     * @see PasswordAuthenticatedUserInterface
-     */
     public function getPassword(): string
     {
         return $this->password;
@@ -110,28 +94,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+        // Effacer les données sensibles, si nécessaire
     }
 
-    
-    
-    /**
-     * @return Collection<int, Service>
-     */
-  
-    /**
-     * @return Collection<int, Schedule>
-     */
     public function getSchedule(): Collection
     {
         return $this->schedule;
@@ -143,27 +113,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->schedule->add($schedule);
             $schedule->setUser($this);
         }
-
         return $this;
     }
 
     public function removeSchedule(Schedule $schedule): static
     {
         if ($this->schedule->removeElement($schedule)) {
-            // set the owning side to null (unless already changed)
             if ($schedule->getUser() === $this) {
                 $schedule->setUser(null);
             }
         }
-
         return $this;
     }
 
-    
-
-    /**
-     * @return Collection<int, Testimonials>
-     */
     public function getTestimonials(): Collection
     {
         return $this->testimonials;
@@ -175,49 +137,40 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->testimonials->add($testimonials);
             $testimonials->setUser($this);
         }
-
         return $this;
     }
 
     public function removeTestimonial(Testimonials $testimonials): static
     {
         if ($this->testimonials->removeElement($testimonials)) {
-            // set the owning side to null (unless already changed)
             if ($testimonials->getUser() === $this) {
                 $testimonials->setUser(null);
             }
         }
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Service>
-     */
-    public function getServices(): Collection
+    public function getService(): Collection
     {
-        return $this->services;
+        return $this->service;
     }
 
     public function addService(Service $service): static
     {
-        if (!$this->services->contains($service)) {
-            $this->services->add($service);
+        if (!$this->service->contains($service)) {
+            $this->service->add($service);
             $service->setUser($this);
         }
-
         return $this;
     }
 
     public function removeService(Service $service): static
     {
-        if ($this->services->removeElement($service)) {
-            // set the owning side to null (unless already changed)
+        if ($this->service->removeElement($service)) {
             if ($service->getUser() === $this) {
                 $service->setUser(null);
             }
         }
-
         return $this;
     }
 }

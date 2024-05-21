@@ -2,143 +2,90 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Garage Vincent.Parrot {% endblock %}
- 
 
 {% block body %}
 
-<section class="voiture"
+<section class="voiture">
     <div class="container col-xxl-8 px-4 py-5 p-5">
         <div class="col-lg-6">
-            <h3 class=" mb-3">Nos voitures d'occasion</h3>
-            <p class="lead">Chaque véhicule est une promesse de
-            qualité et de fiabilité. Nos experts passionnés sélectionnent méticuleusement chaque voiture
-            pour vous offrir une gamme exceptionnelle. Que vous recherchiez une berline élégante,
-            un SUV robuste ou une voiture compacte, notre collection  saura répondre à toutes vos attentes. 
-            .</p>
+            <h3 class="mb-3">Nos voitures d'occasion</h3>
+            <p class="lead">
+                Chaque véhicule est une promesse de qualité et de fiabilité. Nos experts passionnés sélectionnent
+                méticuleusement chaque voiture pour vous offrir une gamme exceptionnelle. Que vous recherchiez une berline
+                élégante, un SUV robuste ou une voiture compacte, notre collection saura répondre à toutes vos attentes.
+            </p>
             <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-            <a class="btn btn-primary btn-lg px-4 me-md-2" href="{{ path('app_contact') }}">Contactez-nous</a>
+                <a class="btn btn-primary btn-lg px-4 me-md-2" href="{{ path('app_contact') }}">Contactez-nous</a>
             </div>
         </div>
     </div>
     <div class="row justify-content-center mx-auto my-auto">
-    {% for car in cars %}
-        {% include "partials/_block_car.html.twig" %}
-    {% endfor %}
-  </div>
+        {% for car in cars %}
+            {% include "partials/_block_car.html.twig" %}
+        {% endfor %}
     </div>
-    
-    </section>
+</section>
 
 <section class="Témoignages">
- <div class="container col-xxl-8 px-4 py-5 p-5">
+    <div class="container col-xxl-8 px-4 py-5 p-5">
         <div class="row mb-4">
             <div class="col-lg-6">
                 <h3 class="mb-3">Vos témoignages</h3>
-                <p class="lead">Votre avis compte énormément pour nous ! Afin de continuer à offrir des services exceptionnels, nous aimerions avoir votre retour quant à votre expérience avec nous. Que ce soit sur l'achat de votre véhicule, le service après-vente ou simplement votre passage dans notre concession, votre opinion est précieuse. Partagez votre expérience et aidez-nous à offrir un service encore plus personnalisé et à la hauteur de vos attentes.</p>
+                <p class="lead">
+                    Votre avis compte énormément pour nous ! Afin de continuer à offrir des services exceptionnels, nous aimerions
+                    avoir votre retour quant à votre expérience avec nous. Que ce soit sur l'achat de votre véhicule, le service
+                    après-vente ou simplement votre passage dans notre concession, votre opinion est précieuse. Partagez votre
+                    expérience et aidez-nous à offrir un service encore plus personnalisé et à la hauteur de vos attentes.
+                </p>
             </div>
         </div>
 
         <div class="row d-flex">
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <p>Je suis très satisfaite service fourni par le garage Parrot je le recommande vivement!</p>
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar" width="25" height="25" />
-                                <p class="small mb-0 ms-2">Martha</p>
-                            </div>
-                            <div class="d-flex flex-row align-items-center">
-                                <p class="small text-muted mb-0">Note</p>
-                                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
-                                <p class="small text-muted mb-0">3</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <p>J'ai acheté ma voiture chez V.Parrot,et le service est top, je ne suis pas déçu</p>
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="25" height="25" />
-                                <p class="small mb-0 ms-2">Johny</p>
-                            </div>
-                            <div class="d-flex flex-row align-items-center">
-                                <p class="small text-muted mb-0">Note</p>
-                                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
-                                <p class="small text-muted mb-0">4</p>
+            {% for testimonial in testimonials %}
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <p>{{ testimonial.comment }}</p>
+                            <div class="d-flex justify-content-between">
+                                <div class="d-flex flex-row align-items-center">
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(4).webp" alt="avatar" width="25" height="25" />
+                                    <p class="small mb-0 ms-2">{{ testimonial.name }}</p>
+                                </div>
+                                <div class="d-flex flex-row align-items-center">
+                                    <p class="small text-muted mb-0">Note</p>
+                                    <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+                                    <p class="small text-muted mb-0">{{ testimonial.rate }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <p>Très bon garage je vous le conseille!</p>
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(31).webp" alt="avatar" width="25" height="25" />
-                                <p class="small mb-0 ms-2">Alyssa</p>
-                            </div>
-                            <div class="d-flex flex-row align-items-center text-primary">
-                               <p class="small text-muted mb-0">Notez</p>
-                                <i class="fas fa-thumbs-up mx-2 fa-xs" style="margin-top: -0.16rem;"></i>
-                                <p class="small mb-0"></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <p>Bon service après après-vente</p>
-                        <div class="d-flex justify-content-between">
-                            <div class="d-flex flex-row align-items-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(32).webp" alt="avatar" width="25" height="25" />
-                                <p class="small mb-0 ms-2">Marc</p>
-                            </div>
-                            <div class="d-flex flex-row align-items-center">
-                                  <p class="small text-muted mb-0">Note</p>
-                                <i class="far fa-thumbs-up ms-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
-                                <p class="small text-muted mb-0">5</p>
-                              
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-           
+            {% endfor %}
         </div>
-            <a class="btn btn-secondary btn-lg px-4 me-md-2" href="{{ path('app_testimonials') }}">Laissez un témoignage</a>
-        </div>
-            
-    </section>
+        <a class="btn btn-secondary btn-lg px-4 me-md-2" href="{{ path('app_testimonials') }}">Laissez un témoignage</a>
+    </div>
+</section>
 
-    <section
-        <div class="container col-xxl-8  mt-1 mb-10">
-            <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+<section>
+    <div class="container col-xxl-8 mt-1 mb-10">
+        <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
             <div class="col-10 col-sm-8 col-lg-6">
-               <img src="{{ asset('images/R.jpg') }}"  class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+                <img src="{{ asset('images/R.jpg') }}" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
             </div>
             <div class="col-lg-6">
                 <h3 class="mb-3">Nos services</h3>
-              
-               <p class="lead mt-2 p">Que votre voiture ait besoin d'une réparation de carrosserie suite à un accident ou que
-                vous recherchiez une maintenance mécanique régulière, nous sommes là pour vous. nos experts s'attellent
-                à redonner à votre véhicule son éclat d'origine grâce à nos services de carrosserie et de mecanique de pointe .le garage vous propose
-                 fonctionne de manière optimale grâce à nos services de mécanique de pointe. Nous sommes fiers de vous offrir
-                 des solutions complètes pour maintenir votre véhicule en parfait état. Prenez rendez-vous dès aujourd'hui ! 
-                  
+                <p class="lead mt-2">
+                    Que votre voiture ait besoin d'une réparation de carrosserie suite à un accident ou que vous recherchiez une
+                    maintenance mécanique régulière, nous sommes là pour vous. Nos experts s'attellent à redonner à votre véhicule
+                    son éclat d'origine grâce à nos services de carrosserie et de mécanique de pointe. Le garage vous propose des
+                    solutions complètes pour maintenir votre véhicule en parfait état. Prenez rendez-vous dès aujourd'hui !
+                </p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-               <a class="btn btn-primary btn-lg px-4 me-md-2" href="{{ path('app_service') }}">Voir nos services</a>
-              <a class="btn btn-secondary btn-lg px-4 me-md-2" href="{{ path('app_contact') }}">Prenez rendez-vous</a>
-            </div>
+                    <a class="btn btn-primary btn-lg px-4 me-md-2" href="{{ path('app_service') }}">Voir nos services</a>
+                    <a class="btn btn-secondary btn-lg px-4 me-md-2" href="{{ path('app_contact') }}">Prenez rendez-vous</a>
+                </div>
             </div>
         </div>
-       </section> 
-    {% endblock %}
-
+    </div>
+</section>
+{% endblock %}

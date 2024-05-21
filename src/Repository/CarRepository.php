@@ -42,7 +42,7 @@ class CarRepository extends ServiceEntityRepository
                 ->setParameter('price', $price * 100);
         }
 
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->execute();
     }
 }
 
