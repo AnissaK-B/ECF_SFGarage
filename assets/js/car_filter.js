@@ -1,49 +1,51 @@
-const filterForm = document.getElementById("filter-form");
-const filterCarsDiv = document.getElementById("filterCars");
-
-filterForm.addEventListener("submit", async (event) => {
+document.getElementById('filter-form').addEventListener('submit', function (event) {
     event.preventDefault();
+    const formData = new FormData(this);
 
-    const marque = document.getElementById('marque').value;
-    const mileage = document.getElementById('mileage').value;
-    const year = document.getElementById('year').value;
-    const price = document.getElementById('price').value;
+    fetch('/car/filter?' + new URLSearchParams(formData), {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        const carsContainer = document.getElementById('filterCars');
+        carsContainer.innerHTML = '';
 
-    try {
-        const url = `/car/filter?marque=${marque}&mileage=${mileage}&year=${year}&price=${price}`;
-        const response = await fetch(url);
+        if (data.cars && data.cars.length > 0) {
+            data.cars.forEach(car => {
+                // Function to escape HTML special characters
+                const escapeHTML = (str) => {
+                    return str.replace(/&/g, '&amp;')
+                              .replace(/</g, '&lt;')
+                              .replace(/>/g, '&gt;')
+                              .replace(/"/g, '&quot;')
+                              .replace(/'/g, '&#39;');
+                };
 
-        if (response.ok) {
-            const filterData = await response.json();
-            filterCarsDiv.innerHTML = '';
-
-            if (filterData.car.length === 0) {
-                const h = document.createElement("h4");
-                h.textContent = "Aucun résultat";
-                filterCarsDiv.appendChild(h);
-            } else {
-                filterData.car.forEach((car) => {
-                    let carDiv = document.createElement('div');
-                    carDiv.innerHTML = `
-                        <img src="/uploads/image/${car.image}" alt="voiture" class="card-img-top"> 
-                        <h3>${car.marque}</h3>
-                        <p>Kilométrage: ${car.mileage} km</p>
-                        <p>Année: ${car.year}</p>
-                        <p>Prix: ${car.price / 100} €</p>
-                        <a href="${car.url}" class="btn btn-card">Je suis intéressé par ce véhicule</a>
-                    `;
-                    filterCarsDiv.appendChild(carDiv);
-                });
-            }
+                const carCard = `
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <img src="/images/car/${escapeHTML(car.image)}" class="card-img-top" alt="voiture">
+                            <div class="card-body">
+                                <h5 class="card-title">${escapeHTML(car.marque)}</h5>
+                                <p class="card-text">
+                                    Kilométrage : ${escapeHTML(car.mileage.toString())} km<br>
+                                    Année : ${escapeHTML(car.year.toString())}<br>
+                                    Prix : ${escapeHTML((car.price / 100).toFixed(2).toString())} €
+                                </p>
+                                <a href="${escapeHTML(car.url)}" class="btn btn-primary">Voir Détails</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                carsContainer.innerHTML += carCard;
+            });
         } else {
-            console.error("Erreur lors de la requête Ajax", response.status);
+            carsContainer.innerHTML = '<p>Aucune voiture ne correspond à vos critères de recherche.</p>';
         }
-    } catch (error) {
-        console.error("Une erreur s'est produite :", error);
-    }
-});
-
-const resetButton = document.querySelector("#reset-btn");
-resetButton.addEventListener("click", function () {
-    window.location.replace("/car");
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const carsContainer = document.getElementById('filterCars');
+        carsContainer.innerHTML = '<p>Une erreur est survenue lors de la récupération des données. Veuillez réessayer plus tard.</p>';
+    });
 });

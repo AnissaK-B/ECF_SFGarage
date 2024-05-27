@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Testimonials;
 use App\Form\TestimonialsType;
 use App\Repository\TestimonialsRepository;
-use App\Repository\ScheduleRepository; // Importez le ScheduleRepository
+use App\Repository\ScheduleRepository; 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -9,8 +9,14 @@ controllers:
 
     
 # config/routes.yaml
-
 app_car_filter:
     path: /car/filter
     controller: App\Controller\CarController::filter
-    methods: [POST]
+    methods: [GET]
+
+
+car_show:
+    path: /car/{id}
+    controller: App\Controller\CarController::show
+    requirements:
+        id: \d+   

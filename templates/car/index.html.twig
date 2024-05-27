@@ -1,49 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Voitures d'occasion{% endblock %}
+{% block title %}Nos véhicules d'occasion{% endblock %}
 
 {% block body %}
+<div class="filter">
+    <h1 class="text-center mb-4">{{ "Nos voitures d'occasion" }}</h1>
+    <h3 class="mb-3">{{ "Filtrer les annonces" }}</h3>
+    <form id="filter-form" method="get">
+        <div class="filter-row mb-3">
+            <label for="marque">Marque :</label>
+            <input type="text" name="marque" id="marque">
+        </div>
 
-<div class="container mt-4">
-    <h1 class="text-center mb-4">{{"Nos voitures d'occasion"}}</h1>
-    <h3 class="mb-3">{{"Filtrer les annonces"}}</h3>
-    <div class="filter">
-        <!-- Form for AJAX filtering -->
-       <form id="filter-form" method="get">
-    <div class="filter-row mb-3">
-        <label for="marque">Marque :</label>
-        <input type="text" name="marque" id="marque">
-    </div>
-    <div class="mb-3">
-        <label for="year">Année</label>
-        <input type="text" name="year" id="year">
-    </div>
-    <div class="mb-3">
-        <label for="price">Prix</label>
-        <input type="text" name="price" id="price">
-    </div>
-    <div class="mb-3">
-        <label for="mileage">Kilomètres</label>
-        <input type="text" name="mileage" id="mileage">
-    </div>
-    <button type="submit" class="btn3 btn-filter" id="filter-btn">Filtrer</button>
-    <button type="reset" id="reset-btn" class="btn3">Réinitialiser</button>
-</form>
-    </div>
+        <div class="filter-row mb-3">
+            <label for="mileage">Kilomètres :</label>
+            <input type="text" name="mileage" id="mileage">
+        </div>
 
-    <!-- Display filtered cars here -->
-    <div id="filterCars" class="mb-4"></div>
-
-    <div class="row">
-        {% for car in cars %}
-            {% include "partials/_block_car.html.twig" %}
-        {% endfor %}
-    </div>
+        <div class="filter-row mb-3">
+            <label for="year">Année :</label>
+            <input type="text" name="year" id="year">
+        </div>
+        <div class="filter-row mb-3">
+            <label for="price">Prix :</label>
+            <input type="text" name="price" id="price">
+        </div>
+       
+        <button type="submit" class="btn btn-primary" id="filter-btn">Filtrer</button>
+        <button type="reset" id="reset-btn" class="btn btn-secondary">Réinitialiser</button>
+    </form>
 </div>
+
+<div id="filterCars" class="mb-4"></div>
+
+<div class="row">
+    {% for car in cars %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img src="{{ asset('/images/car/' ~ car.imageName) }}" class="card-img-top" alt="voiture">
+                <div class="card-body">
+                    <h5 class="card-title">{{ car.marque }}</h5>
+                    <p class="card-text">
+                        Kilométrage : {{ car.mileage | number_format }} km<br>
+                        Année : {{ car.year }}<br>
+                        Prix : {{ car.price / 100 }} €
+                    </p>
+                    <a href="{{ path('app_car_show', {id: car.id}) }}" class="btn btn-primary">Voir Détails</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('js/car_filter.js') }}"></script>
-{% endblock %}
-
 {% endblock %}
