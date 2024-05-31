@@ -15,7 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class UserCrudController extends AbstractCrudController
 {
     public function __construct(
-        public UserPasswordHasherInterface $userPasswordHasher
+        private UserPasswordHasherInterface $userPasswordHasher
     ) {}
 
     public static function getEntityFqcn(): string
@@ -26,10 +26,9 @@ class UserCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return $actions
-            ->add(Crud::PAGE_EDIT, Action::INDEX)
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
-            ->add(Crud::PAGE_EDIT, Action::DETAIL)
-            ;
+            ->add(Crud::PAGE_EDIT, Action::INDEX)
+            ->add(Crud::PAGE_EDIT, Action::DETAIL);
     }
 
     public function configureFields(string $pageName): iterable
@@ -38,24 +37,23 @@ class UserCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
             EmailField::new('email'),
             ChoiceField::new('roles')
-            ->setChoices(['ROLE_ADMIN' => 'ROLE_ADMIN', 'ROLE_USER' => 'ROLE_USER'])
-            ->allowMultipleChoices()
-            ->renderExpanded(),
-            
+                ->setChoices(['ROLE_ADMIN' => 'ROLE_ADMIN', 'ROLE_USER' => 'ROLE_USER'])
+                ->allowMultipleChoices()
+                ->renderExpanded(),
         ];
 
-        $password = TextField::new('password')
+        $passwordField = TextField::new('password')
             ->setFormType(RepeatedType::class)
             ->setFormTypeOptions([
                 'type' => PasswordType::class,
                 'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => '(Repeat)'],
+                'second_options' => ['label' => 'Repeat Password'],
                 'mapped' => false,
             ])
             ->setRequired($pageName === Crud::PAGE_NEW)
-            ->onlyOnForms()
-            ;
-        $fields[] = $password;
+            ->onlyOnForms();
+
+        $fields[] = $passwordField;
 
         return $fields;
     }
@@ -74,22 +72,16 @@ class UserCrudController extends AbstractCrudController
 
     private function addPasswordEventListener(FormBuilderInterface $formBuilder): FormBuilderInterface
     {
-        return $formBuilder->addEventListener(FormEvents::POST_SUBMIT, $this->hashPassword());
-    }
-
-    private function hashPassword() {
-        return function($event) {
+        $formBuilder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event) {
             $form = $event->getForm();
-            if (!$form->isValid()) {
-                return;
-            }
+            $user = $form->getData();
             $password = $form->get('password')->getData();
-            if ($password === null) {
-                return;
+            if ($password) {
+                $hashedPassword = $this->userPasswordHasher->hashPassword($user, $password);
+                $user->setPassword($hashedPassword);
             }
+        });
 
-            $hash = $this->userPasswordHasher->hashPassword($this->getUser(), $password);
-            $form->getData()->setPassword($hash);
-        };
+        return $formBuilder;
     }
 }

@@ -12,27 +12,18 @@ document.getElementById('filter-form').addEventListener('submit', function (even
 
         if (data.cars && data.cars.length > 0) {
             data.cars.forEach(car => {
-                // Function to escape HTML special characters
-                const escapeHTML = (str) => {
-                    return str.replace(/&/g, '&amp;')
-                              .replace(/</g, '&lt;')
-                              .replace(/>/g, '&gt;')
-                              .replace(/"/g, '&quot;')
-                              .replace(/'/g, '&#39;');
-                };
-
                 const carCard = `
                     <div class="col-md-4">
                         <div class="card mb-4">
-                            <img src="/images/car/${escapeHTML(car.image)}" class="card-img-top" alt="voiture">
+                            <img src="/images/car/${car.image}" class="card-img-top" alt="voiture">
                             <div class="card-body">
-                                <h5 class="card-title">${escapeHTML(car.marque)}</h5>
+                                <h5 class="card-title">${car.marque}</h5>
                                 <p class="card-text">
-                                    Kilométrage : ${escapeHTML(car.mileage.toString())} km<br>
-                                    Année : ${escapeHTML(car.year.toString())}<br>
-                                    Prix : ${escapeHTML((car.price / 100).toFixed(2).toString())} €
+                                    Kilométrage : ${car.mileage} km<br>
+                                    Année : ${car.year}<br>
+                                    Prix : ${(car.price / 100).toFixed(2)} €
                                 </p>
-                                <a href="${escapeHTML(car.url)}" class="btn btn-primary">Voir Détails</a>
+                                <a href="${car.url}" class="btn btn-primary">Voir Détails</a>
                             </div>
                         </div>
                     </div>
