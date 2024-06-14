@@ -37,13 +37,13 @@
     {% for car in cars %}
         <div class="col-md-4">
             <div class="card mb-4">
-                <img src="{{ asset('/images/car/' ~ car.imageName) }}" class="card-img-top" alt="voiture">
+                <img src="{{ asset('/images/car/' ~ car.imageName|e) }}" class="card-img-top" alt="voiture">
                 <div class="card-body">
                     <h5 class="card-title">{{ car.marque }}</h5>
                     <p class="card-text">
                         Kilométrage : {{ car.mileage | number_format }} km<br>
-                        Année : {{ car.year }}<br>
-                        Prix : {{ car.price / 100 }} €
+                            Année : {{ car.year|e }}<br>
+                          Prix : {{ (car.price / 100)|number_format(2, ',', ' ')|e }} €
                     </p>
                     <a href="{{ path('app_car_show', {id: car.id}) }}" class="btn btn-primary">Voir Détails</a>
                 </div>

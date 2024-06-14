@@ -1,17 +1,16 @@
 
         
-        <div class="card mb-4 mt-8 ">
-                        <div class="card-body mt-4">
-                                <p>{{testimonials.comment}}</p>
-                                <div class="d-flex justify-content-between">
-                                <div class="d-flex flex-row align-items-center">
-                                <p class="small mb-0 ms-2">{{testimonials.name}}</p>
-                                </div>
-                                <div class="d-flex flex-row align-items-center">
-                                        <p class="small text-muted mb-0">{{testimonials.rate}}</p>
-                                        <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>    
-                                </div>
-                                
-                        </div>
-                        </div>
-                </div>
+       <div class="card mb-4 mt-8 ">
+    <div class="card-body mt-4">
+        <p>{{ testimonials.comment | e }}</p>
+        <div class="d-flex justify-content-between">
+            <div class="d-flex flex-row align-items-center">
+                <p class="small mb-0 ms-2">{{ testimonials.name | e }}</p>
+            </div>
+            <div class="d-flex flex-row align-items-center">
+                <p class="small text-muted mb-0">{{ testimonials.rate }}</p>
+                <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>    
+            </div>
+        </div>
+    </div>
+</div>

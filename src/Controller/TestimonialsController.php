@@ -17,15 +17,15 @@ class TestimonialsController extends AbstractController
     #[Route('/testimonials', name: 'app_testimonials')]
     public function index(Request $request, EntityManagerInterface $entityManager, TestimonialsRepository $testimonialsRepository, ScheduleRepository $scheduleRepository): Response
     {
-        $schedules = $scheduleRepository->findAll(); // Récupérez les horaires depuis le repository
+        $schedules = $scheduleRepository->findAll(); 
         $testimonials = new Testimonials();
         $user = $this->getUser();
         $testimonials->setUser($user);
         $testimonials->setApproved(false);
-      
+    
         $form = $this->createForm(TestimonialsType::class, $testimonials);
         $form->handleRequest($request);
-       
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($testimonials);
             $entityManager->flush();
@@ -38,7 +38,7 @@ class TestimonialsController extends AbstractController
         return $this->render('testimonials/index.html.twig', [
             'testimonials_form' => $form->createView(),
             'testimonials' => $approvedTestimonials,
-            'schedules' => $schedules, // Passez les horaires au template
+            'schedules' => $schedules
         ]);
     }
 }
