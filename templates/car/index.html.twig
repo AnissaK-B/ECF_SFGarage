@@ -41,9 +41,9 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ car.marque }}</h5>
                     <p class="card-text">
-                        Kilométrage : {{ car.mileage | number_format }} km<br>
-                            Année : {{ car.year|e }}<br>
-                          Prix : {{ (car.price / 100)|number_format(2, ',', ' ')|e }} €
+                        Kilométrage : {{ car.getMileage() | number_format }} km<br>
+                            Année : {{ car.getYear()}}<br>
+                          Prix : {{ (car.getPrice() / 100)}} €
                     </p>
                     <a href="{{ path('app_car_show', {id: car.id}) }}" class="btn btn-primary">Voir Détails</a>
                 </div>
